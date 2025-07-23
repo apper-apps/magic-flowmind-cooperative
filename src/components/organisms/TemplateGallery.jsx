@@ -63,10 +63,10 @@ const TemplateGallery = () => {
       );
     }
 
-    setFilteredTemplates(filtered);
+setFilteredTemplates(filtered);
   };
 
-  const useTemplate = async (template) => {
+  const handleUseTemplate = async (template) => {
     try {
       const newWorkflow = {
         name: `${template.name} (Copy)`,
@@ -82,7 +82,6 @@ const TemplateGallery = () => {
       toast.error("Failed to use template");
     }
   };
-
   if (loading) return <Loading variant="workflow" />;
   if (error) return <Error message={error} onRetry={loadTemplates} />;
 
@@ -182,10 +181,10 @@ const TemplateGallery = () => {
               </div>
 
               <div className="flex space-x-2">
-                <Button
+<Button
                   size="sm"
                   className="flex-1"
-                  onClick={() => useTemplate(template)}
+                  onClick={() => handleUseTemplate(template)}
                 >
                   <ApperIcon name="Copy" size={14} className="mr-2" />
                   Use Template
