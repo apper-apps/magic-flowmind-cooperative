@@ -1,0 +1,281 @@
+[
+  {
+    "Id": 1,
+    "userId": "user-1",
+    "name": "Slack Notification Workflow",
+    "description": "Automatically send Slack messages when new data is received via webhook",
+    "status": "success",
+    "lastRun": "2024-01-15T09:30:00Z",
+    "createdAt": "2024-01-10T14:00:00Z",
+    "nodes": [
+      {
+        "Id": 1,
+        "type": "trigger",
+        "position": { "x": 100, "y": 100 },
+        "data": {
+          "label": "Webhook Trigger",
+          "config": {
+            "method": "POST",
+            "path": "/webhook/slack-notify"
+          }
+        },
+        "inputs": [],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 2,
+        "type": "transform",
+        "position": { "x": 400, "y": 100 },
+        "data": {
+          "label": "Format Message",
+          "config": {
+            "template": "New event: {{event_type}} - {{description}}"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 3,
+        "type": "action",
+        "position": { "x": 700, "y": 100 },
+        "data": {
+          "label": "Send to Slack",
+          "config": {
+            "url": "https://hooks.slack.com/services/...",
+            "method": "POST"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": []
+      }
+    ],
+    "connections": [
+      {
+        "Id": 1,
+        "source": "1",
+        "target": "2",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "Id": 2,
+        "source": "2", 
+        "target": "3",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "userId": "user-1",
+    "name": "Email Marketing Automation",
+    "description": "Send personalized emails based on user behavior data",
+    "status": "draft",
+    "lastRun": null,
+    "createdAt": "2024-01-12T10:15:00Z",
+    "nodes": [
+      {
+        "Id": 4,
+        "type": "trigger",
+        "position": { "x": 50, "y": 150 },
+        "data": {
+          "label": "User Event Trigger",
+          "config": {
+            "event": "user_signup"
+          }
+        },
+        "inputs": [],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 5,
+        "type": "condition",
+        "position": { "x": 350, "y": 150 },
+        "data": {
+          "label": "Check User Segment",
+          "config": {
+            "field": "user.segment",
+            "operator": "equals",
+            "value": "premium"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": ["true", "false"]
+      },
+      {
+        "Id": 6,
+        "type": "action",
+        "position": { "x": 650, "y": 80 },
+        "data": {
+          "label": "Send Premium Welcome Email",
+          "config": {
+            "template": "premium_welcome",
+            "service": "sendgrid"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": []
+      },
+      {
+        "Id": 7,
+        "type": "action",
+        "position": { "x": 650, "y": 220 },
+        "data": {
+          "label": "Send Standard Welcome Email",
+          "config": {
+            "template": "standard_welcome",
+            "service": "sendgrid"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": []
+      }
+    ],
+    "connections": [
+      {
+        "Id": 3,
+        "source": "4",
+        "target": "5",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "Id": 4,
+        "source": "5",
+        "target": "6",
+        "sourceHandle": "true",
+        "targetHandle": "input"
+      },
+      {
+        "Id": 5,
+        "source": "5",
+        "target": "7",
+        "sourceHandle": "false",
+        "targetHandle": "input"
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "userId": "user-1",
+    "name": "Data Sync Pipeline",
+    "description": "Synchronize data between multiple databases and APIs",
+    "status": "running",
+    "lastRun": "2024-01-15T11:00:00Z",
+    "createdAt": "2024-01-08T16:30:00Z",
+    "nodes": [
+      {
+        "Id": 8,
+        "type": "trigger",
+        "position": { "x": 100, "y": 200 },
+        "data": {
+          "label": "Scheduled Trigger",
+          "config": {
+            "schedule": "0 */6 * * *",
+            "timezone": "UTC"
+          }
+        },
+        "inputs": [],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 9,
+        "type": "action",
+        "position": { "x": 400, "y": 150 },
+        "data": {
+          "label": "Fetch from API A",
+          "config": {
+            "url": "https://api.example.com/data",
+            "method": "GET",
+            "headers": {
+              "Authorization": "Bearer {{token}}"
+            }
+          }
+        },
+        "inputs": ["input"],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 10,
+        "type": "action",
+        "position": { "x": 400, "y": 250 },
+        "data": {
+          "label": "Fetch from Database B",
+          "config": {
+            "query": "SELECT * FROM users WHERE updated_at > {{last_sync}}",
+            "connection": "postgres_main"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 11,
+        "type": "transform",
+        "position": { "x": 700, "y": 200 },
+        "data": {
+          "label": "Merge & Transform Data",
+          "config": {
+            "script": "// Custom JavaScript transformation logic\nreturn mergeAndTransform(apiData, dbData);"
+          }
+        },
+        "inputs": ["input1", "input2"],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 12,
+        "type": "action",
+        "position": { "x": 1000, "y": 200 },
+        "data": {
+          "label": "Update Target Database",
+          "config": {
+            "operation": "upsert",
+            "table": "synchronized_data",
+            "connection": "mysql_target"
+          }
+        },
+        "inputs": ["input"],
+        "outputs": []
+      }
+    ],
+    "connections": [
+      {
+        "Id": 6,
+        "source": "8",
+        "target": "9",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "Id": 7,
+        "source": "8",
+        "target": "10",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "Id": 8,
+        "source": "9",
+        "target": "11",
+        "sourceHandle": "output",
+        "targetHandle": "input1"
+      },
+      {
+        "Id": 9,
+        "source": "10",
+        "target": "11",
+        "sourceHandle": "output",
+        "targetHandle": "input2"
+      },
+      {
+        "Id": 10,
+        "source": "11",
+        "target": "12",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      }
+    ]
+  }
+]

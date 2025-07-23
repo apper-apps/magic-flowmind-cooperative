@@ -1,0 +1,80 @@
+[
+  {
+    "Id": 1,
+    "userId": "user-1",
+    "title": "Web Development Questions",
+    "model": "gpt-4",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T11:45:00Z",
+    "messages": [
+      {
+        "Id": 1,
+        "role": "user",
+        "content": "How do I optimize React performance?",
+        "timestamp": "2024-01-15T10:30:00Z"
+      },
+      {
+        "Id": 2,
+        "role": "assistant",
+        "content": "Here are several strategies to optimize React performance:\n\n1. **Use React.memo()** for functional components to prevent unnecessary re-renders\n2. **Implement useMemo()** for expensive calculations\n3. **Use useCallback()** to memoize functions\n4. **Code splitting** with React.lazy() and Suspense\n5. **Optimize bundle size** by analyzing with webpack-bundle-analyzer\n\nWould you like me to elaborate on any of these techniques?",
+        "timestamp": "2024-01-15T10:30:15Z"
+      },
+      {
+        "Id": 3,
+        "role": "user",
+        "content": "Can you show me an example of React.memo()?",
+        "timestamp": "2024-01-15T10:32:00Z"
+      },
+      {
+        "Id": 4,
+        "role": "assistant",
+        "content": "Certainly! Here's a practical example of React.memo():\n\n```jsx\nimport React from 'react';\n\n// Without memo - re-renders on every parent update\nconst ExpensiveComponent = ({ data, count }) => {\n  console.log('Rendering ExpensiveComponent');\n  return (\n    <div>\n      <h3>Data: {data}</h3>\n      <p>Count: {count}</p>\n    </div>\n  );\n};\n\n// With memo - only re-renders when props change\nconst OptimizedComponent = React.memo(({ data, count }) => {\n  console.log('Rendering OptimizedComponent');\n  return (\n    <div>\n      <h3>Data: {data}</h3>\n      <p>Count: {count}</p>\n    </div>\n  );\n});\n\n// Custom comparison function (optional)\nconst SmartComponent = React.memo(({ user, posts }) => {\n  return (\n    <div>\n      <h3>{user.name}</h3>\n      <p>{posts.length} posts</p>\n    </div>\n  );\n}, (prevProps, nextProps) => {\n  // Return true if props are equal (skip re-render)\n  return prevProps.user.id === nextProps.user.id && \n         prevProps.posts.length === nextProps.posts.length;\n});\n```\n\nThe key benefits:\n- Prevents re-renders when props haven't changed\n- Particularly useful for components that receive complex objects\n- Can provide custom comparison logic for fine-tuned control",
+        "timestamp": "2024-01-15T10:32:30Z"
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "userId": "user-1",
+    "title": "API Integration Help",
+    "model": "gpt-3.5-turbo",
+    "createdAt": "2024-01-14T14:20:00Z",
+    "updatedAt": "2024-01-14T15:10:00Z",
+    "messages": [
+      {
+        "Id": 5,
+        "role": "user",
+        "content": "I need help with handling API errors in JavaScript",
+        "timestamp": "2024-01-14T14:20:00Z"
+      },
+      {
+        "Id": 6,
+        "role": "assistant",
+        "content": "Great question! Here are several robust approaches for handling API errors in JavaScript:\n\n## 1. Basic Fetch with Error Handling\n```javascript\nasync function fetchData(url) {\n  try {\n    const response = await fetch(url);\n    \n    if (!response.ok) {\n      throw new Error(`HTTP error! status: ${response.status}`);\n    }\n    \n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error('Fetch error:', error);\n    throw error;\n  }\n}\n```\n\n## 2. Axios with Interceptors\n```javascript\nimport axios from 'axios';\n\n// Response interceptor\naxios.interceptors.response.use(\n  response => response,\n  error => {\n    if (error.response?.status === 401) {\n      // Handle unauthorized\n      window.location.href = '/login';\n    }\n    return Promise.reject(error);\n  }\n);\n```\n\nWould you like me to show more specific error handling patterns?",
+        "timestamp": "2024-01-14T14:20:25Z"
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "userId": "user-1",
+    "title": "Database Design Discussion",
+    "model": "gpt-4",
+    "createdAt": "2024-01-13T09:15:00Z",
+    "updatedAt": "2024-01-13T10:30:00Z",
+    "messages": [
+      {
+        "Id": 7,
+        "role": "user",
+        "content": "What's the difference between SQL and NoSQL databases?",
+        "timestamp": "2024-01-13T09:15:00Z"
+      },
+      {
+        "Id": 8,
+        "role": "assistant",
+        "content": "Excellent question! Here's a comprehensive comparison:\n\n## SQL Databases (Relational)\n**Examples:** MySQL, PostgreSQL, SQLite, SQL Server\n\n**Characteristics:**\n- **Structure:** Fixed schema with tables, rows, columns\n- **ACID Compliance:** Ensures data consistency\n- **Relationships:** Strong support for joins and foreign keys\n- **Query Language:** Standardized SQL\n- **Scaling:** Vertical scaling (adding more power to existing server)\n\n**Best for:**\n- Complex queries and reporting\n- Applications requiring strong consistency\n- Financial systems, e-commerce\n- When data relationships are well-defined\n\n## NoSQL Databases (Non-Relational)\n**Examples:** MongoDB, Cassandra, Redis, DynamoDB\n\n**Characteristics:**\n- **Structure:** Flexible schema (documents, key-value, graph, column)\n- **Eventual Consistency:** May prioritize availability over immediate consistency\n- **Relationships:** Limited join operations\n- **Query Language:** Varies by database type\n- **Scaling:** Horizontal scaling (adding more servers)\n\n**Best for:**\n- Rapid development and iteration\n- Big data and real-time applications\n- Content management, IoT data\n- When data structure may evolve\n\n## Choosing Between Them\n\n| Factor | SQL | NoSQL |\n|--------|-----|-------|\n| Data Structure | Well-defined, stable | Flexible, evolving |\n| Scalability | Vertical | Horizontal |\n| Consistency | Strong | Eventual |\n| Complexity | High query complexity | Simple queries |\n| Development Speed | Slower initial setup | Rapid prototyping |\n\nThe choice often depends on your specific use case, scalability needs, and team expertise.",
+        "timestamp": "2024-01-13T09:15:45Z"
+      }
+    ]
+  }
+]

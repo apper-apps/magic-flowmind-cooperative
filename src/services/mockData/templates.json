@@ -1,0 +1,132 @@
+[
+  {
+    "Id": 1,
+    "name": "Slack Alert Integration",
+    "description": "Automatically send Slack notifications when specific events occur in your applications. Perfect for monitoring, alerts, and team communication.",
+    "category": "integration",
+    "icon": "MessageSquare",
+    "nodeCount": 3,
+    "complexity": "Simple",
+    "popular": true,
+    "nodes": [
+      {
+        "Id": 1,
+        "type": "trigger",
+        "position": { "x": 100, "y": 100 },
+        "data": {
+          "label": "HTTP Webhook",
+          "config": {}
+        },
+        "inputs": [],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 2,
+        "type": "transform",
+        "position": { "x": 400, "y": 100 },
+        "data": {
+          "label": "Format Message",
+          "config": {}
+        },
+        "inputs": ["input"],
+        "outputs": ["output"]
+      },
+      {
+        "Id": 3,
+        "type": "action",
+        "position": { "x": 700, "y": 100 },
+        "data": {
+          "label": "Send to Slack",
+          "config": {}
+        },
+        "inputs": ["input"],
+        "outputs": []
+      }
+    ],
+    "connections": []
+  },
+  {
+    "Id": 2,
+    "name": "Email Campaign Automation",
+    "description": "Create sophisticated email marketing campaigns with conditional logic, personalization, and behavior-based triggers.",
+    "category": "productivity",
+    "icon": "Mail",
+    "nodeCount": 5,
+    "complexity": "Medium",
+    "popular": true,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 3,
+    "name": "Database Sync Pipeline",
+    "description": "Synchronize data between multiple databases, APIs, and services. Includes error handling, retry logic, and data transformation.",
+    "category": "data",
+    "icon": "Database",
+    "nodeCount": 7,
+    "complexity": "Advanced",
+    "popular": false,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 4,
+    "name": "Social Media Publisher",
+    "description": "Automatically publish content across multiple social media platforms with custom scheduling and content optimization.",
+    "category": "automation",
+    "icon": "Share2",
+    "nodeCount": 4,
+    "complexity": "Medium",
+    "popular": true,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 5,
+    "name": "Customer Support Ticket Router",
+    "description": "Intelligently route support tickets based on content analysis, priority, and team availability. Includes escalation logic.",
+    "category": "productivity",
+    "icon": "HelpCircle",
+    "nodeCount": 6,
+    "complexity": "Advanced",
+    "popular": false,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 6,
+    "name": "Invoice Processing Workflow",
+    "description": "Automate invoice processing from receipt to payment tracking. Includes PDF parsing, validation, and approval workflows.",
+    "category": "automation",
+    "icon": "Receipt",
+    "nodeCount": 8,
+    "complexity": "Advanced",
+    "popular": false,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 7,
+    "name": "Lead Scoring & Nurturing",
+    "description": "Score leads based on behavior and demographics, then automatically nurture them with personalized content sequences.",
+    "category": "productivity",
+    "icon": "Target",
+    "nodeCount": 5,
+    "complexity": "Medium",
+    "popular": true,
+    "nodes": [],
+    "connections": []
+  },
+  {
+    "Id": 8,
+    "name": "File Processing Pipeline",
+    "description": "Process uploaded files through multiple stages including validation, transformation, storage, and notification.",
+    "category": "data",
+    "icon": "FileText",
+    "nodeCount": 6,
+    "complexity": "Medium",
+    "popular": false,
+    "nodes": [],
+    "connections": []
+  }
+]

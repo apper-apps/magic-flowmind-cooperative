@@ -1,0 +1,56 @@
+{
+  "stats": {
+    "totalConversations": 42,
+    "conversationsChange": 12,
+    "activeWorkflows": 18,
+    "workflowsChange": 5,
+    "apiCalls": 1247,
+    "apiCallsChange": -3,
+    "successRate": 98.5,
+    "successRateChange": 2.1
+  },
+  "recentActivity": [
+    {
+      "Id": 1,
+      "type": "chat",
+      "title": "New conversation started",
+      "description": "Web Development Questions",
+      "timestamp": "2 hours ago"
+    },
+    {
+      "Id": 2,
+      "type": "workflow",
+      "title": "Workflow executed successfully",
+      "description": "Slack Notification Workflow",
+      "timestamp": "4 hours ago"
+    },
+    {
+      "Id": 3,
+      "type": "workflow",
+      "title": "New workflow created",
+      "description": "Email Marketing Automation",
+      "timestamp": "1 day ago"
+    },
+    {
+      "Id": 4,
+      "type": "chat",
+      "title": "AI model switched",
+      "description": "Changed from GPT-3.5 to GPT-4",
+      "timestamp": "1 day ago"
+    },
+    {
+      "Id": 5,
+      "type": "workflow",
+      "title": "Template used",
+      "description": "Slack Alert Integration template",
+      "timestamp": "2 days ago"
+    },
+    {
+      "Id": 6,
+      "type": "system",
+      "title": "System maintenance completed",
+      "description": "Performance optimizations applied",
+      "timestamp": "3 days ago"
+    }
+  ]
+}
