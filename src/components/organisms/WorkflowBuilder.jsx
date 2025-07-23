@@ -367,11 +367,25 @@ const WorkflowBuilder = () => {
           </div>
 
           <div className="space-y-4">
-            <div>
+<div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
                 Node Name
               </label>
-              <Input value={selectedNode.data.label} />
+              <Input 
+                value={selectedNode?.data?.label || ''} 
+                onChange={(e) => {
+                  if (selectedNode) {
+                    setSelectedNode({
+                      ...selectedNode,
+                      data: {
+                        ...selectedNode.data,
+                        label: e.target.value
+                      }
+                    });
+                  }
+                }}
+                placeholder="Enter node name"
+              />
             </div>
 
             {selectedNode.type === "action" && (
