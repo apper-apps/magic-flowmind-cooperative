@@ -8,8 +8,8 @@ import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
 import conversationService from "@/services/api/conversationService";
+import openaiService from "@/services/api/openaiService";
 import { toast } from "react-toastify";
-
 const ChatInterface = () => {
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState(null);
@@ -69,7 +69,7 @@ const ChatInterface = () => {
     }
   };
 
-  const sendMessage = async () => {
+const sendMessage = async () => {
     if (!inputMessage.trim() || sending) return;
 
     try {
@@ -84,14 +84,17 @@ const ChatInterface = () => {
 
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
+      const currentInput = inputMessage;
       setInputMessage("");
 
-      // Simulate AI response
-      setTimeout(async () => {
+      // Generate AI response using OpenAI
+      try {
+        const aiResponse = await openaiService.generateResponse(newMessages, selectedModel);
+        
         const aiMessage = {
           Id: Date.now() + 1,
           role: "assistant",
-          content: `I understand you're asking about: "${inputMessage}". This is a simulated AI response. In a real implementation, this would connect to your chosen AI model (${selectedModel}) to provide intelligent responses.`,
+          content: aiResponse,
           timestamp: new Date().toISOString()
         };
 
@@ -115,11 +118,45 @@ const ChatInterface = () => {
             )
           );
         }
+      } catch (apiError) {
+        console.error('OpenAI API Error:', apiError);
         
-        setSending(false);
-      }, 2000);
+        // Create fallback message with error context
+        const fallbackMessage = {
+          Id: Date.now() + 1,
+          role: "assistant",
+          content: `I apologize, but I'm unable to process your request right now. ${apiError.message}\n\nPlease check your OpenAI API configuration or try again later.`,
+          timestamp: new Date().toISOString()
+        };
+
+        const updatedMessages = [...newMessages, fallbackMessage];
+        setMessages(updatedMessages);
+
+        // Update conversation with fallback
+        if (activeConversation) {
+          const updatedConversation = {
+            ...activeConversation,
+            messages: updatedMessages,
+            updatedAt: new Date().toISOString()
+          };
+          
+          await conversationService.update(activeConversation.Id, updatedConversation);
+          setActiveConversation(updatedConversation);
+          
+          setConversations(prev => 
+            prev.map(conv => 
+              conv.Id === activeConversation.Id ? updatedConversation : conv
+            )
+          );
+        }
+
+        toast.error(apiError.message);
+      }
+      
+      setSending(false);
 
     } catch (err) {
+      console.error('Send message error:', err);
       toast.error("Failed to send message");
       setSending(false);
     }
